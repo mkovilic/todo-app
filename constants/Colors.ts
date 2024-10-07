@@ -3,14 +3,14 @@ const tintColorDark = '#fff';
 
 export const Colors = {
   light: {
-    text: '#11181C',
+    onBackground: '#11181C',
     background: '#fff',
     tint: tintColorLight,
     icon: '#687076',
     statusBar: 'black',
   },
   dark: {
-    text: '#ECEDEE',
+    onBackground: '#ECEDEE',
     background: '#151718',
     tint: tintColorDark,
     icon: '#9BA1A6',

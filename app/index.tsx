@@ -1,15 +1,16 @@
 import React from 'react';
 import { useTheme } from 'react-native-paper';
 import { View, Text, StyleSheet } from 'react-native';
-
+import { ThemedView } from '../compoonents/ThemedView';
+import { ThemedText } from '../compoonents/ThemedText';
 
 export default function Index() {
   const theme = useTheme();
-  
+
   return (
-    <View style={[styles.container, {backgroundColor: theme.colors.background}]}>
-      <Text style={{color:"white"}}>Home</Text>
-    </View>
+    <ThemedView style={[styles.container]}>
+      <ThemedText type='defaultSemiBold'>Home</ThemedText>
+    </ThemedView>
   );
 }
 
