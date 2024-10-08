@@ -7,13 +7,11 @@ export const Colors = {
     background: '#fff',
     tint: tintColorLight,
     icon: '#687076',
-    statusBar: 'black',
   },
   dark: {
     onBackground: '#ECEDEE',
     background: '#151718',
     tint: tintColorDark,
     icon: '#9BA1A6',
-    statusBar: 'black',
   },
 };

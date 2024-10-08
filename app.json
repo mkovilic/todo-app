@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "light",
-    "scheme": "todoapp",
+    "scheme": "com.mkovilic.todoapp",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",

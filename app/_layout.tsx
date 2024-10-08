@@ -1,26 +1,23 @@
-import React from "react";
-import {
-  MD3DarkTheme,
-  MD3LightTheme,
-  PaperProvider,
-  adaptNavigationTheme,
-} from "react-native-paper";
 import {
   DarkTheme as NavigationDarkTheme,
   DefaultTheme as NavigationDefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
 import merge from "deepmerge";
+import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useColorScheme } from "../hooks/useColorScheme";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
-import { useEffect } from "react";
-import { useFonts } from "expo-font";
+import React, { useEffect } from "react";
+import {
+  MD3DarkTheme,
+  MD3LightTheme,
+  PaperProvider,
+  adaptNavigationTheme,
+} from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "../constants/Colors";
 import { useTheme } from "../hooks/useTheme";
-import BottomNavigationBar from "react-native-paper/lib/typescript/components/BottomNavigation/BottomNavigationBar";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -41,33 +38,37 @@ export default function RootLayout() {
   const theme =
     colorScheme === "dark" ? CombinedDarkTheme : CombinedDefaultTheme;
 
-  const loaded = useFonts({
+  const [fontsLoaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
 
-  useEffect(() => {
-    SplashScreen.hideAsync();
-  }, [loaded]);
+  const statusBarStyle = colorScheme === "dark" ? "light" : "dark";
 
-  if (!loaded) {
+  useEffect(() => {
+    if (fontsLoaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
     return null;
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 , backgroundColor: theme.colors.background}}>
-    <PaperProvider theme={theme}>
-      <ThemeProvider value={theme}>
-        <Stack>
-          <Stack.Screen
-            name="index"
-            options={{
-              headerShown: false,
-            }}
-          />
-        </Stack>
-        <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
-      </ThemeProvider>
-    </PaperProvider>
+    <SafeAreaView style={{ flex: 1, backgroundColor: theme.colors.background }}>
+      <PaperProvider theme={theme}>
+        <ThemeProvider value={theme}>
+          <StatusBar style={statusBarStyle} backgroundColor={theme.colors.background} />
+          <Stack>
+            <Stack.Screen
+              name="index"
+              options={{
+                headerShown: false,
+              }}
+            />
+          </Stack>
+        </ThemeProvider>
+      </PaperProvider>
     </SafeAreaView>
   );
 }
