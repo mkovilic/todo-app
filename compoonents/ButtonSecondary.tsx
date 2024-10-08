@@ -18,7 +18,7 @@ export default function ButtonSecondary({
   const theme = useTheme();
 
   return (
-    <View
+    <TouchableHighlight
       style={[
         styles.container,
         {
@@ -28,22 +28,23 @@ export default function ButtonSecondary({
           backgroundColor: theme.colors.onBackground,
           borderColor: theme.colors.outline,
         },
+        ,
       ]}
+      onPress={onPress}
+      disabled={disabled}
     >
-      <TouchableHighlight
+      <View
         style={[
           styles.button,
           { backgroundColor: disabled ? "#ccc" : theme.colors.onBackground },
         ]}
-        onPress={onPress}
-        disabled={disabled}
       >
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <MaterialIcons name={icon} size={24} color="white" />
           <Text style={styles.text}>{title}</Text>
         </View>
-      </TouchableHighlight>
-    </View>
+      </View>
+    </TouchableHighlight>
   );
 }
 
