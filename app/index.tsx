@@ -3,15 +3,17 @@ import { useTheme } from "react-native-paper";
 import { View, Text, StyleSheet } from "react-native";
 import ButtonSecondary from "../compoonents/ButtonSecondary";
 import SpaceSectionItem from "../compoonents/SpaceSectionItem";
-import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import ToDoBottomSheet from "../compoonents/ToDoBottomSheet";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
 export default function Index() {
   const theme = useTheme();
-  const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
-  const bottomSheetRef = useRef<BottomSheet>(null);
-  const snapPoints = useMemo(() => ["45%", "100%"], []);
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+  const [inputText, onChangeInputText] = useState("");
 
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+  }, []);
   const handleSheetChanges = useCallback((index: number) => {
     console.log("handleSheetChanges", index);
   }, []);
@@ -22,13 +24,16 @@ export default function Index() {
         To-Do
       </Text>
       <View style={styles.buttonContainer}>
-        <ButtonSecondary title="New Space" onPress={() => {}} icon="add" />
+        <ButtonSecondary
+          title="New Space"
+          onPress={() => {
+            handlePresentModalPress();
+          }}
+          icon="add"
+        />
         <ButtonSecondary
           title="Join Space"
-          onPress={() => {
-            setBottomSheetVisible(true);
-            console.log(isBottomSheetVisible);
-          }}
+          onPress={() => {}}
           icon="people-alt"
         />
       </View>
@@ -45,19 +50,16 @@ export default function Index() {
         />
       </View>
 
-      {isBottomSheetVisible && (
-          <BottomSheet
-            ref={bottomSheetRef}
-            snapPoints={snapPoints}
-            //enableDynamicSizing={true}
-            onChange={handleSheetChanges}
-            enablePanDownToClose={true}
-          >
-            <BottomSheetView style={styles.contentContainer}>
-              <Text>Awesome 🎉</Text>
-            </BottomSheetView>
-          </BottomSheet>
-      )}
+      <ToDoBottomSheet
+        title="Create New To-Do Space"
+        description="Creating a new space will allow you to invite others to collaborate on tasks."
+        inputText={inputText}
+        inputPlaceholder="Space Name"
+        inputOnChange={onChangeInputText}
+        buttonText="Create"
+        bottomSheetModalRef={bottomSheetModalRef}
+        handleSheetChanges={handleSheetChanges}
+      />
     </View>
   );
 }

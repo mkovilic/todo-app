@@ -17,7 +17,7 @@ export default function SpaceSectionItem({
   const theme = useTheme();
 
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity style={style.button} onPress={onPress}>
       <View style={[style.container]}>
         <View
           style={[
@@ -52,6 +52,9 @@ export default function SpaceSectionItem({
 }
 
 const style = StyleSheet.create({
+  button: {
+    marginVertical: 8,
+  },
   container: {
     flexDirection: "row",
     width: "100%",

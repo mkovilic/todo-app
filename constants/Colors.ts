@@ -11,6 +11,8 @@ export const Colors = {
   dark: {
     primary: '#101B23',
     onPrimary: '#182533',
+    primaryContainer: '#0A7EA4',
+    secondary: '#1E2A32',
     background: '#101B23',
     onBackground: '#fff',//text
     onSurface: '#8EA5B6',
