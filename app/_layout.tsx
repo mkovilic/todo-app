@@ -18,6 +18,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "../constants/Colors";
 import { useTheme } from "../hooks/useTheme";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -45,9 +46,7 @@ export default function RootLayout() {
   const statusBarStyle = colorScheme === "dark" ? "light" : "dark";
 
   useEffect(() => {
-    if (fontsLoaded) {
       SplashScreen.hideAsync();
-    }
   }, [fontsLoaded]);
 
   if (!fontsLoaded) {
@@ -55,20 +54,27 @@ export default function RootLayout() {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: theme.colors.background }}>
-      <PaperProvider theme={theme}>
-        <ThemeProvider value={theme}>
-          <StatusBar style={statusBarStyle} backgroundColor={theme.colors.background} />
-          <Stack>
-            <Stack.Screen
-              name="index"
-              options={{
-                headerShown: false,
-              }}
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaView
+        style={{ flex: 1, backgroundColor: theme.colors.background }}
+      >
+        <PaperProvider theme={theme}>
+          <ThemeProvider value={theme}>
+            <StatusBar
+              style={statusBarStyle}
+              backgroundColor={theme.colors.background}
             />
-          </Stack>
-        </ThemeProvider>
-      </PaperProvider>
-    </SafeAreaView>
+            <Stack>
+              <Stack.Screen
+                name="index"
+                options={{
+                  headerShown: false,
+                }}
+              />
+            </Stack>
+          </ThemeProvider>
+        </PaperProvider>
+      </SafeAreaView>
+    </GestureHandlerRootView>
   );
 }

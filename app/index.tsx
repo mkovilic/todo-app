@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import { useTheme } from "react-native-paper";
 import { View, Text, StyleSheet } from "react-native";
 import ButtonSecondary from "../compoonents/ButtonSecondary";
 import SpaceSectionItem from "../compoonents/SpaceSectionItem";
+import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function Index() {
   const theme = useTheme();
+  const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
+  const bottomSheetRef = useRef<BottomSheet>(null);
+  const snapPoints = useMemo(() => ["45%", "100%"], []);
+
+  const handleSheetChanges = useCallback((index: number) => {
+    console.log("handleSheetChanges", index);
+  }, []);
 
   return (
     <View style={[styles.container]}>
@@ -16,7 +25,10 @@ export default function Index() {
         <ButtonSecondary title="New Space" onPress={() => {}} icon="add" />
         <ButtonSecondary
           title="Join Space"
-          onPress={() => {}}
+          onPress={() => {
+            setBottomSheetVisible(true);
+            console.log(isBottomSheetVisible);
+          }}
           icon="people-alt"
         />
       </View>
@@ -32,6 +44,20 @@ export default function Index() {
           onPress={() => {}}
         />
       </View>
+
+      {isBottomSheetVisible && (
+          <BottomSheet
+            ref={bottomSheetRef}
+            snapPoints={snapPoints}
+            //enableDynamicSizing={true}
+            onChange={handleSheetChanges}
+            enablePanDownToClose={true}
+          >
+            <BottomSheetView style={styles.contentContainer}>
+              <Text>Awesome 🎉</Text>
+            </BottomSheetView>
+          </BottomSheet>
+      )}
     </View>
   );
 }
@@ -40,6 +66,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 16,
+    alignItems: "center",
+  },
+  contentContainer: {
+    flex: 1,
     alignItems: "center",
   },
   buttonContainer: {
