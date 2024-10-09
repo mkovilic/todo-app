@@ -16,6 +16,7 @@ export default function ButtonPrimary({
 
   return (
     <Pressable
+      android_ripple={{ color: theme.colors.primary }}
       style={[
         styles.button,
         { backgroundColor: theme.colors.primaryContainer },

@@ -55,8 +55,9 @@ export default function Index() {
         description="Creating a new space will allow you to invite others to collaborate on tasks."
         inputText={inputText}
         inputPlaceholder="Space Name"
-        inputOnChange={onChangeInputText}
         buttonText="Create"
+        route="./space"
+        inputOnChange={onChangeInputText}
         bottomSheetModalRef={bottomSheetModalRef}
         handleSheetChanges={handleSheetChanges}
       />

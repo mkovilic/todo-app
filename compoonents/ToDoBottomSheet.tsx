@@ -7,21 +7,24 @@ import {
 } from "@gorhom/bottom-sheet";
 import { TextInput, useTheme } from "react-native-paper";
 import ButtonPrimary from "./ButtonPrimary";
+import { Link } from "expo-router";
 
 type ToDoBottomSheetProps = {
   title: string;
+  route: string;
   description: string;
   inputPlaceholder: string;
   inputText: string;
-  inputOnChange: (text: string) => void;
   buttonText: string;
   handleSheetChanges: (index: number) => void;
+  inputOnChange: (text: string) => void;
   bottomSheetModalRef: React.RefObject<BottomSheetModal>;
 };
 
 export default function ToDoBottomSheet({
   title,
   description,
+  route,
   inputPlaceholder,
   inputText,
   inputOnChange,
@@ -57,24 +60,29 @@ export default function ToDoBottomSheet({
             {description}
           </Text>
           <TextInput
-            style={[
-              styles.input,
-              { backgroundColor: theme.colors.primary },
-            ]}
+            style={[styles.input, { backgroundColor: theme.colors.primary }]}
             placeholderTextColor={theme.colors.onSurface}
             textColor={theme.colors.onBackground}
             value={inputText}
             placeholder={inputPlaceholder}
             onChangeText={inputOnChange}
           />
-          <ButtonPrimary
-            text={buttonText}
-            style={{
-              ...styles.button,
-              backgroundColor: theme.colors.primaryContainer,
+          <Link
+            href={{
+              pathname: route,
+              params: { spaceName: inputText },
             }}
-            onPress={() => {}}
-          />
+            asChild
+          >
+            <ButtonPrimary
+              text={buttonText}
+              style={{
+                ...styles.button,
+                backgroundColor: theme.colors.primaryContainer,
+              }}
+              onPress={() => {}}
+            />
+          </Link>
         </BottomSheetView>
       </BottomSheetModal>
     </BottomSheetModalProvider>
@@ -97,7 +105,7 @@ const styles = StyleSheet.create({
     marginVertical: 4,
     textAlign: "center",
   },
-  input:{
+  input: {
     marginVertical: 16,
     borderRadius: 8,
   },

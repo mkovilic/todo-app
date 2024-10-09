@@ -71,6 +71,12 @@ export default function RootLayout() {
                   headerShown: false,
                 }}
               />
+              <Stack.Screen
+                name="space"
+                options={{
+                 headerShown: false,
+                }}
+              />
             </Stack>
           </ThemeProvider>
         </PaperProvider>
