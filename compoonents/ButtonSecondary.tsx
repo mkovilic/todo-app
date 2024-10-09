@@ -20,12 +20,9 @@ export default function ButtonSecondary({
   return (
     <TouchableHighlight
       style={[
-        styles.container,
+        styles.button,
         {
-          flex: 1,
-          padding: 4,
-          margin: 8,
-          backgroundColor: theme.colors.onBackground,
+          backgroundColor: theme.colors.onPrimary,
           borderColor: theme.colors.outline,
         },
         ,
@@ -33,36 +30,29 @@ export default function ButtonSecondary({
       onPress={onPress}
       disabled={disabled}
     >
-      <View
-        style={[
-          styles.button,
-          { backgroundColor: disabled ? "#ccc" : theme.colors.onBackground },
-        ]}
-      >
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <MaterialIcons name={icon} size={24} color="white" />
-          <Text style={styles.text}>{title}</Text>
-        </View>
+      <View style={[styles.container]}>
+        <MaterialIcons name={icon} size={24} color={theme.colors.surface} />
+        <Text style={[styles.text,{color:theme.colors.onBackground}]}>{title}</Text>
       </View>
     </TouchableHighlight>
   );
 }
 
 const styles = StyleSheet.create({
+  button: {
+    flex: 1,
+    margin: 8,
+    borderRadius: 8,
+    borderWidth: 1,
+  },
   container: {
     flexDirection: "row",
     alignItems: "center",
-    borderRadius: 8,
-    borderWidth: 2,
-  },
-  button: {
-    borderRadius: 8,
-    padding: 10,
+    padding: 12,
   },
   text: {
     fontSize: 16,
     marginLeft: 8,
     fontWeight: "500",
-    color: "white",
   },
 });

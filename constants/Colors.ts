@@ -9,10 +9,14 @@ export const Colors = {
     icon: '#687076',
   },
   dark: {
+    primary: '#101B23',
+    onPrimary: '#182533',
     background: '#101B23',
-    onBackground: '#182533',
+    onBackground: '#fff',//text
+    onSurface: '#8EA5B6',
     tint: tintColorDark,
     icon: '#9BA1A6',
     outline: '#344D62',
+    surface: '#fff', //icon
   },
 };

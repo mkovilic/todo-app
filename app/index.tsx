@@ -9,7 +9,9 @@ export default function Index() {
 
   return (
     <View style={[styles.container]}>
-      <Text style={styles.headerText}>To-Do</Text>
+      <Text style={[styles.headerText, { color: theme.colors.onBackground }]}>
+        To-Do
+      </Text>
       <View style={styles.buttonContainer}>
         <ButtonSecondary title="New Space" onPress={() => {}} icon="add" />
         <ButtonSecondary
@@ -19,8 +21,16 @@ export default function Index() {
         />
       </View>
       <View style={styles.sectionContainer}>
-        <Text style={styles.sectionText}>Spaces</Text>
-        <SpaceSectionItem />
+        <Text
+          style={[styles.sectionText, { color: theme.colors.onBackground }]}
+        >
+          Spaces
+        </Text>
+        <SpaceSectionItem
+          title="Nyes"
+          description="1 task, 4 members"
+          onPress={() => {}}
+        />
       </View>
     </View>
   );
@@ -46,12 +56,10 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "600",
     marginBottom: 8,
-    color: "white",
   },
   headerText: {
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 16,
-    color: "white",
   },
 });
