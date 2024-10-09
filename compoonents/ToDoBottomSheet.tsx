@@ -76,9 +76,12 @@ const ToDoBottomSheet = forwardRef<BottomSheetModal, ToDoBottomSheetProps>(
               <TextInput
                 style={[
                   styles.input,
-                  { backgroundColor: theme.colors.primary },
+                  {
+                    backgroundColor: theme.colors.primary,
+                    borderColor: theme.colors.onSurface,
+                  },
                 ]}
-                
+                activeUnderlineColor="transparent"
                 cursorColor={theme.colors.onBackground}
                 placeholderTextColor={theme.colors.onSurface}
                 textColor={theme.colors.onBackground}
@@ -136,6 +139,11 @@ const styles = StyleSheet.create({
   },
   input: {
     marginVertical: 16,
+    borderRadius: 16,
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderTopEndRadius: 16,
+    borderTopStartRadius: 16,
   },
   button: {
     width: "100%",
