@@ -8,9 +8,9 @@ import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
 export default function Index() {
   const theme = useTheme();
-  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const [inputText, onChangeInputText] = useState("");
-
+  
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
   }, []);
@@ -37,20 +37,10 @@ export default function Index() {
           icon="people-alt"
         />
       </View>
-      <View style={styles.sectionContainer}>
-        <Text
-          style={[styles.sectionText, { color: theme.colors.onBackground }]}
-        >
-          Spaces
-        </Text>
-        <SpaceSectionItem
-          title="Nyes"
-          description="1 task, 4 members"
-          onPress={() => {}}
-        />
-      </View>
+      {/* Spaces */}
+      <SpaceLayout theme={theme} />
 
-      <ToDoBottomSheet
+      <ToDoBottomSheet 
         title="Create New To-Do Space"
         description="Creating a new space will allow you to invite others to collaborate on tasks."
         inputText={inputText}
@@ -58,12 +48,27 @@ export default function Index() {
         buttonText="Create"
         route="./space"
         inputOnChange={onChangeInputText}
-        bottomSheetModalRef={bottomSheetModalRef}
         handleSheetChanges={handleSheetChanges}
+        ref={bottomSheetModalRef}
       />
     </View>
   );
 }
+
+const SpaceLayout = ({theme}) => {
+  return (
+    <View style={styles.sectionContainer}>
+      <Text style={[styles.sectionText, { color: theme.colors.onBackground }]}>
+        Spaces
+      </Text>
+      <SpaceSectionItem
+        title="Nyes"
+        description="1 task, 4 members"
+        onPress={() => {}}
+      />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

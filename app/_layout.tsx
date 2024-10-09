@@ -46,7 +46,9 @@ export default function RootLayout() {
   const statusBarStyle = colorScheme === "dark" ? "light" : "dark";
 
   useEffect(() => {
+    if (fontsLoaded) {
       SplashScreen.hideAsync();
+    }
   }, [fontsLoaded]);
 
   if (!fontsLoaded) {
@@ -74,7 +76,7 @@ export default function RootLayout() {
               <Stack.Screen
                 name="space"
                 options={{
-                 headerShown: false,
+                  headerShown: false,
                 }}
               />
             </Stack>

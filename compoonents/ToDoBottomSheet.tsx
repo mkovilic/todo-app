@@ -1,13 +1,13 @@
-import React, { useState, useRef, useMemo, useCallback } from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
 import {
   BottomSheetModal,
-  BottomSheetView,
   BottomSheetModalProvider,
+  BottomSheetView,
 } from "@gorhom/bottom-sheet";
+import { Link } from "expo-router";
+import React, { forwardRef, useMemo } from "react";
+import { StyleSheet, Text, View } from "react-native";
 import { TextInput, useTheme } from "react-native-paper";
 import ButtonPrimary from "./ButtonPrimary";
-import { Link } from "expo-router";
 
 type ToDoBottomSheetProps = {
   title: string;
@@ -18,81 +18,110 @@ type ToDoBottomSheetProps = {
   buttonText: string;
   handleSheetChanges: (index: number) => void;
   inputOnChange: (text: string) => void;
-  bottomSheetModalRef: React.RefObject<BottomSheetModal>;
 };
 
-export default function ToDoBottomSheet({
-  title,
-  description,
-  route,
-  inputPlaceholder,
-  inputText,
-  inputOnChange,
-  buttonText,
-  bottomSheetModalRef,
-  handleSheetChanges,
-}: ToDoBottomSheetProps) {
-  const theme = useTheme();
-  const snapPoints = useMemo(() => ["25%", "50%"], []);
+const ToDoBottomSheet = forwardRef<BottomSheetModal, ToDoBottomSheetProps>(
+  (
+    {
+      title,
+      description,
+      route,
+      inputPlaceholder,
+      inputText,
+      inputOnChange,
+      buttonText,
+      handleSheetChanges,
+    },
+    ref
+  ) => {
+    const theme = useTheme();
+    const snapPoints = useMemo(() => ["50%"], []);
+    const isDisabled = inputText.length === 0;
 
-  return (
-    <BottomSheetModalProvider>
-      <BottomSheetModal
-        ref={bottomSheetModalRef}
-        index={1}
-        snapPoints={snapPoints}
-        onChange={handleSheetChanges}
-        backgroundStyle={{ backgroundColor: theme.colors.secondary }}
-        handleIndicatorStyle={{ backgroundColor: theme.colors.onBackground }}
-      >
-        <BottomSheetView
-          style={[
-            styles.contentContainer,
-            { backgroundColor: theme.colors.secondary },
-          ]}
+    const handleButtonPress = () => {
+      // Close the modal
+      ref.current?.dismiss();
+    };
+
+    return (
+      <BottomSheetModalProvider>
+        <BottomSheetModal
+          ref={ref}
+          snapPoints={snapPoints}
+          onChange={handleSheetChanges}
+          backgroundStyle={{ backgroundColor: theme.colors.secondary }}
+          handleIndicatorStyle={{ backgroundColor: theme.colors.onBackground }}
+          onDismiss={handleButtonPress}
         >
-          <Text style={[styles.title, { color: theme.colors.onBackground }]}>
-            {title}
-          </Text>
-          <Text
-            style={[styles.description, { color: theme.colors.onBackground }]}
+          <BottomSheetView
+            style={[
+              styles.contentContainer,
+              { backgroundColor: theme.colors.secondary },
+            ]}
           >
-            {description}
-          </Text>
-          <TextInput
-            style={[styles.input, { backgroundColor: theme.colors.primary }]}
-            placeholderTextColor={theme.colors.onSurface}
-            textColor={theme.colors.onBackground}
-            value={inputText}
-            placeholder={inputPlaceholder}
-            onChangeText={inputOnChange}
-          />
-          <Link
-            href={{
-              pathname: route,
-              params: { spaceName: inputText },
-            }}
-            asChild
-          >
-            <ButtonPrimary
-              text={buttonText}
-              style={{
-                ...styles.button,
-                backgroundColor: theme.colors.primaryContainer,
+            <View style={styles.innerContainer}>
+              <Text
+                style={[styles.title, { color: theme.colors.onBackground }]}
+              >
+                {title}
+              </Text>
+              <Text
+                style={[
+                  styles.description,
+                  { color: theme.colors.onBackground },
+                ]}
+              >
+                {description}
+              </Text>
+              <TextInput
+                style={[
+                  styles.input,
+                  { backgroundColor: theme.colors.primary },
+                ]}
+                
+                cursorColor={theme.colors.onBackground}
+                placeholderTextColor={theme.colors.onSurface}
+                textColor={theme.colors.onBackground}
+                value={inputText}
+                placeholder={inputPlaceholder}
+                onChangeText={inputOnChange}
+              />
+            </View>
+            <Link
+              href={{
+                pathname: route,
+                params: { spaceName: inputText },
               }}
-              onPress={() => {}}
-            />
-          </Link>
-        </BottomSheetView>
-      </BottomSheetModal>
-    </BottomSheetModalProvider>
-  );
-}
+              asChild
+            >
+              <ButtonPrimary
+                text={buttonText}
+                isDisabled={isDisabled}
+                style={{
+                  ...styles.button,
+                  backgroundColor: theme.colors.primaryContainer,
+                  opacity: isDisabled ? 0.5 : 1,
+                }}
+                onPress={() => ref.current?.dismiss()}
+              />
+            </Link>
+          </BottomSheetView>
+        </BottomSheetModal>
+      </BottomSheetModalProvider>
+    );
+  }
+);
+
+export default ToDoBottomSheet;
 
 const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     padding: 16,
+  },
+  innerContainer: {
+    flex: 1,
+    justifyContent: "flex-start",
   },
   title: {
     fontSize: 24,
@@ -107,13 +136,9 @@ const styles = StyleSheet.create({
   },
   input: {
     marginVertical: 16,
-    borderRadius: 8,
   },
   button: {
     width: "100%",
-    position: "absolute",
-    marginVertical: 32,
-    marginHorizontal: 16,
-    bottom: 0,
+    marginVertical: 16,
   },
 });
